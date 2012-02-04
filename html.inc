@@ -50,6 +50,7 @@
         <label for="twitter_user">Input Twitter User:</label>
         <input type="text" id="twitter_user" name="handle" />
         <input type="submit" />
+        <span style="font-size:12px; font-style:italic; color:gray">(for example, interviewstreet)</span>
       </form>
     </div>
 
