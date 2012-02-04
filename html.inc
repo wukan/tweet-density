@@ -8,27 +8,59 @@
       img {border-width: 0}
       * {font-family:'Lucida Grande', sans-serif;}
     </style>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Hour');
+        data.addColumn('number', 'Tweets');
+        data.addRows([
+        <?php if (isset($hours)) { ?>
+          <?php foreach ($hours as $hour => $tweets) { ?>
+            <?php echo "['$hour', $tweets],"?>
+          <?php } ?>
+        <?php } ?>
+        ]);
+        var options = {
+          width: 640, height: 240,
+          title: '<?php echo $twitter_user ?>\'s Tweet Density',
+          hAxis: {title: 'Hour'}
+        };
+  
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
   </head>
   <body>
     <div>
       <h2>Welcome to wukan's Tweet Density.</h2>
 
       <p>This site is a basic showcase of tweetdensity challenge on <a href="http://interviewstreet.com">interviewstreet.com</a>. If you are having issues try <a href='./clearsessions.php'>clearing your session</a>.</p>
-
       
-      <hr />
       <?php if (isset($menu)) { ?>
         <?php echo $menu; ?>
       <?php } ?>
     </div>
-    <?php if (isset($status_text)) { ?>
-      <?php echo '<h3>'.$status_text.'</h3>'; ?>
-    <?php } ?>
-    <p>
-      <pre>
-        <?php print_r($content); ?>
-      </pre>
-    </p>
+
+    <div>
+      <?php if (isset($status_text)) { ?>
+        <?php echo '<h3>'.$status_text.'</h3>'; ?>
+      <?php } ?>
+      <p>
+        <!--
+        <pre>
+          <?php print_r($content); ?>
+        </pre>
+        -->
+      </p>
+    </div>
+
+    <div id="chart_div"></div>
+
+    <hr />
     <p>
         The site is based on twitteroauth from @<a href='http://twitter.com/abraham'>abraham</a>.
         <a href='http://github.com/abraham/twitteroauth'>Source Code</a> &amp;

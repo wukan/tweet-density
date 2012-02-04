@@ -9,7 +9,8 @@ session_start();
 require_once('twitteroauth/twitteroauth.php');
 require_once('config.php');
 
-$twitter_user = 'alunwk';
+//$twitter_user = 'alunwk';
+$twitter_user = 'reconditesea';
 if (!empty($_GET['twitter_user'])) {
   $twitter_user = $_GET['twitter_user'];
 }
@@ -29,15 +30,11 @@ $content = $connection->get('account/verify_credentials');
 
 /* Some example calls */
 $result = $connection->get('users/show', array('screen_name' => $twitter_user));
-//$connection->post('statuses/update', array('status' => date(DATE_RFC822)));
-//$connection->post('statuses/destroy', array('id' => 5437877770));
-//$connection->post('friendships/create', array('id' => 9436992));
-//$connection->post('friendships/destroy', array('id' => 9436992));
 $statuses_count = $result->statuses_count;
 // There are up to 200 tweets you can retrive one time
 $page_num = ceil($statuses_count / 200.0);
 $hours = array();
-/*
+
 for ($i = 0; $i < 24; $i++) $hours[$i] = 0;
 for ($i = 0; $i < $page_num; $i++) {
   // There are up to 3200 tweets per user you can retrieve
@@ -49,7 +46,7 @@ for ($i = 0; $i < $page_num; $i++) {
     $hours[$hour] += 1;
   }
 }
- */
+
 $content = $hours;
 
 /* Include HTML to display on the page */
