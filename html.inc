@@ -11,21 +11,21 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
+      <?php if (isset($hours)) { ?> 
+        google.setOnLoadCallback(drawChart);
+      <?php } ?>
       function drawChart() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Hour');
         data.addColumn('number', 'Tweets');
         data.addRows([
-        <?php if (isset($hours)) { ?>
-          <?php foreach ($hours as $hour => $tweets) { ?>
-            <?php echo "['$hour', $tweets],"?>
-          <?php } ?>
+        <?php foreach ($hours as $hour => $tweets) { ?>
+          <?php echo "['$hour', $tweets],"?>
         <?php } ?>
         ]);
         var options = {
           width: 640, height: 240,
-          title: '<?php echo $twitter_user ?>\'s Tweet Density',
+          title: '<?php echo $twitter_user; ?>\'s Tweet Density',
           hAxis: {title: 'Hour'}
         };
   
@@ -46,25 +46,31 @@
     </div>
 
     <div>
+      <form action="index.php" method="get">
+        <label for="twitter_user">Input Twitter User:</label>
+        <input type="text" id="twitter_user" name="handle" />
+        <input type="submit" />
+      </form>
+    </div>
+
+    <div <?php if(!isset($content)) { echo 'style="display:none;"';}?> >
       <?php if (isset($status_text)) { ?>
         <?php echo '<h3>'.$status_text.'</h3>'; ?>
       <?php } ?>
       <p>
-        <!--
         <pre>
           <?php print_r($content); ?>
         </pre>
-        -->
       </p>
     </div>
 
-    <div id="chart_div"></div>
+    <div id="chart_div" <?php if(!isset($hours)) { echo 'style="display:none;"'; }?> ></div>
 
     <hr />
     <p>
-        The site is based on twitteroauth from @<a href='http://twitter.com/abraham'>abraham</a>.
-        <a href='http://github.com/abraham/twitteroauth'>Source Code</a> &amp;
-        <a href='http://wiki.github.com/abraham/twitteroauth/documentation'>Documentation</a>
-      </p>
+      The site is based on project twitteroauth from @<a href='http://twitter.com/abraham'>abraham</a>.
+      <a href='http://github.com/abraham/twitteroauth'>Source Code</a> &amp;
+      <a href='http://wiki.github.com/abraham/twitteroauth/documentation'>Documentation</a>
+    </p>
   </body>
 </html>
