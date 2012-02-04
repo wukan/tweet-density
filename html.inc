@@ -45,7 +45,7 @@
       <?php } ?>
     </div>
 
-    <div>
+    <div <?php if(!isset($verified)) { echo 'style="display:none;"'; } ?>> 
       <form action="index.php" method="get">
         <label for="twitter_user">Input Twitter User:</label>
         <input type="text" id="twitter_user" name="handle" />

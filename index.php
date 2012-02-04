@@ -29,7 +29,7 @@ $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET,
   $access_token['oauth_token'], $access_token['oauth_token_secret']);
 
 /* If method is set change API call made. Test is called by default. */
-// $content = $connection->get('account/verify_credentials');
+$verified = $connection->get('account/verify_credentials');
 
 if (!is_null($twitter_user)) {
   $result = $connection->get(
